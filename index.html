@@ -12,7 +12,7 @@
       rel="stylesheet">
 </head>
 <body>
-<div class="container main">
+<div class="container main pt-2">
 
 	<nav class="navbar">
 	  <span class="navbar-brand mb-0 h1">Hack or Snooze</span>
@@ -27,39 +27,41 @@
 	</nav>
 	<div class="container form">
 		<div id="exampleAccordion" data-children=".item">
-		  <div class="item">
-		    <div id="exampleAccordion1" class="collapse" role="tabpanel">
-				<div class="container pt-5 pb-5" id="submitform">
-					<div class="form-check">
-						<form action="">
-			  				<div class="form-group row">
-		    					<label for="colFormLabel" class="col-2 col-form-label pl-5">title</label>
-		    						<div class="col-3">
+		  	<div class="item">
+		    	<div id="exampleAccordion1" class="collapse" role="tabpanel">
+					<div class="container pt-3 pb-1" id="submitform">
+						<div class="form-check">
+							<form action="">
+			  					<div class="form-group row">
+		    						<label for="colFormLabel" class="col-2 col-form-label pl-5 text-right"><strong>title</strong></label>
+		    						<div class="col-6">
 		      							<input type="text" class="form-control" id="colFormLabel" placeholder="title" required>
 		    						</div>
-							</div>
-			 				<div class="form-group row">
-					    		<label for="colFormLabel" class="col-2 col-form-label pl-5">url</label>
-					    			<div class="col-3">
-					      				<input type="URL" class="form-control" id="colFormLabel" placeholder="url">
-					    			</div>
-				 		 	</div>
-				 		 	<div class="row">
-				 		 		<div class="col-3">	
-									<button type="submit" class="btn btn-secondary">submit</button>
 								</div>
-							</div>
-						</form>
+			 					<div class="form-group row">
+					    		<label for="colFormLabel" class="col-2 col-form-label pl-5 text-right"><strong>url</strong></label>
+					    			<div class="col-6">
+					      				<input type="URL" class="form-control" id="colFormLabel" placeholder="url">
+					    			</div>				 		 	
+					    		</div>
+					    		<div class="row pl-4 ml-5">
+				 		 			<div class="button pl-5 ml-5">
+				 		 				<div class="subbutton ml-1 pl-2">
+					    					<button type="submit" class="btn btn-secondary mr-0">submit</button>
+					    				</div>	
+					    			</div>
+					    		</div>
+							</form>
+						</div>
 					</div>
-				</div>
-		    </div>
-		  </div>
+		    	</div>
+		  	</div>
 		</div>
 	</div>
 
 
 	<div class="container articles">
-		<ol class="list-group justify-content-start">
+		<ol>
 		  <li class="row list-group-item"><span class="star_empty star">&#9734;</span><a href=""#>Cras justo odio </a><small class="text-muted hostname">(url)</small></li>
 
 		  <!-- star boarder needs to change to star -->
