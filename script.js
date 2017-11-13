@@ -7,13 +7,13 @@ $(function() {
     let $a = $("small > a");
     console.log("a is " + $a);
     let $link = $(this).text();
-    let $siblings = $(this)
-      .parent()
-      .parent()
-      .siblings()
-      .children()
-      .children();
-    console.log($siblings);
+    // let $siblings = $(this)
+    //   .parent()
+    //   .parent()
+    //   .siblings()
+    //   .children()
+    //   .children();
+    // console.log($siblings);
     $a.each(function(i, ele) {
       if ($(ele).text() !== $link) {
         $(ele)
@@ -84,6 +84,8 @@ $(function() {
 
     $("#abc").val("");
     $("#xyz").val("");
+    $("#exampleAccordion > .item > #exampleAccordion1").toggleClass("show");
+    $("#exampleAccordion > .nav-link .item > a").toggleClass("collapsed");
   });
 
   $("ol").on("click", "li > i", function(e) {
