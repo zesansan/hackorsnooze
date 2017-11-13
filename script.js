@@ -11,9 +11,12 @@ $(function() {
 		if (el.text() === 'favorites') {
 			console.log('i am fav')
 			el.text('all')
+			$('ol > li > i.fa-star-o').parent().hide()
+
 		} else if (el.text() === 'all') {
 			console.log('i am all')
 			el.text('favorites');
+			$('ol > li > i.fa-star-o').parent().show();
 		}
 	})
 
@@ -59,6 +62,9 @@ $(function() {
 
 	});
 
+	// $("ul").on("click", "li > i", function(e){
+	// 	$(this).toggleClass('fa fa-star-o fa fa-star')
 
+	// });
 
 });
