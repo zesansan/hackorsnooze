@@ -1,12 +1,12 @@
-body{
+body {
 	background-color: #ffffff;
 }
 
-.favall{
+.favall {
 	/*should toggle between fav or all*/
 }
 
-.navbar{
+.navbar {
 	background-color: #ff6600;
 	justify-content: start;
 	padding-top: 1px;
@@ -17,60 +17,50 @@ body{
 	background-color: #f6f6ef;
 }
 
-#submitform{
-
+#submitform {
 }
 
 .list-group-item {
-    border: none;
-    background-color: #f6f6ef;
-    display: list-item;
-    padding: 3px;
-    width: 400px;
-
+	border: none;
+	background-color: #f6f6ef;
+	display: list-item;
+	padding: 3px;
+	width: 400px;
 }
 
-.hostname{
-
+.hostname {
 }
 
-.list-group{
-
+.list-group {
 }
 
-
-a{
+a {
 	color: #000000;
-
 }
 
-a:hover{
+a:hover {
 	text-decoration: none;
 	color: lightgrey;
 }
 
-.text-muted{
+.text-muted {
 	color: lightgrey;
 }
 
 .articles {
 	background-color: #f6f6ef;
 	padding-left: 50px;
-
 }
 .button {
 	margin-left: 5px;
 }
 
-
-.fa .fa-star-o{
-
+.fa .fa-star-o {
 }
 
-.fa .fa-star{
-
+.fa .fa-star {
 }
 
-small > a{
+small > a {
 	color: #868e96;
 }
