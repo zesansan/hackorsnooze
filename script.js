@@ -91,9 +91,4 @@ $(function() {
   $("ol").on("click", "li > i", function(e) {
     $(this).toggleClass("fa fa-star-o fa fa-star");
   });
-
-  // $("ul").on("click", "li > i", function(e){
-  //  $(this).toggleClass('fa fa-star-o fa fa-star')
-
-  // });
 });

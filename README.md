@@ -28,3 +28,16 @@
 				-can't reload page / preventDefault 
 
 3. Deploy
+
+## AJAX
+
+1. Sign Up/Login Buttons/
+	- need these to be dropdown menus
+2. Submit function should alert users that they need to login/signup to add articles
+3. login functions
+	- favorite things 
+	- submit articles 
+4. not logged in functions
+	- read only 
+	- option to login or signup
+5. Articles should also display username		
