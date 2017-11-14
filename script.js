@@ -104,7 +104,7 @@ $(function() {
   //populate with 10 articles
   $.getJSON("https://hack-or-snooze.herokuapp.com/stories?limit=10").then(
     function(response) {
-      console.log(response);
+      //console.log(response);
       response.data.forEach(function(val, idx, arr) {
         var $newTitle = $("<a>")
           .attr("href", arr[idx].url)
@@ -133,13 +133,24 @@ $(function() {
 
   //signup form
   $("#signupForm").on("submit", function(e) {
+    e.preventDefault();
     $.ajax({
       method: "POST",
       url: "https://hack-or-snooze.herokuapp.com/users",
-      dataType: "JSON"
+      data: {
+        data: {
+          name: $("#newUser").val(),
+          username: $("#newUsername").val(),
+          password: $("#newUserPassword").val()
+        }
+      }
+    }).then(function(response) {
+      console.log(response);
+      alert("successfully registered!!");
     });
+
+    $("newUser").val("");
     $("#newUsername").val("");
     $("#newUserPassword").val("");
-    alert("successfully registered!!");
   });
 });
