@@ -2,10 +2,6 @@ body {
 	background-color: #ffffff;
 }
 
-.favall {
-	/*should toggle between fav or all*/
-}
-
 .navbar {
 	background-color: #ff6600;
 	justify-content: start;
@@ -17,21 +13,12 @@ body {
 	background-color: #f6f6ef;
 }
 
-#submitform {
-}
-
 .list-group-item {
 	border: none;
 	background-color: #f6f6ef;
 	display: list-item;
 	padding: 3px;
 	width: 400px;
-}
-
-.hostname {
-}
-
-.list-group {
 }
 
 a {
@@ -55,12 +42,23 @@ a:hover {
 	margin-left: 5px;
 }
 
-.fa .fa-star-o {
-}
-
-.fa .fa-star {
-}
-
 small > a {
 	color: #868e96;
+}
+
+div#authorize {
+	position: absolute;
+	right: 5px;
+	bottom: 3px;
+}
+
+.dropdown-menu {
+	width: 300px !important;
+}
+#signupForm {
+	left: unset;
+	right: 10px;
+}
+#loginForm {
+	left: -120px;
 }
