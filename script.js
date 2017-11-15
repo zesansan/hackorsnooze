@@ -2,28 +2,32 @@ $(function() {
   // get stories
   $.getJSON("https://hack-or-snooze.herokuapp.com/stories?limit=10").then(
     function(response) {
-      //console.log(response);
+      //looping through each array item in data object
       response.data.forEach(function(val, idx, arr) {
+        //article title
         var $newTitle = $("<a>")
           .attr("href", arr[idx].url)
           .attr("target", "_blank")
           .text(" " + arr[idx].title + " ");
 
+        //hostname
         var $newHostname = $("<small>")
-          .attr("class", "text-muted")
-          .attr("class", "hostname")
-          .text(newHostname(arr[idx].url));
+          .attr("class", "text-muted hostname")
+          .append(newHostname(arr[idx].url));
 
+        //star
         var $starsDefault = $("<i>")
           .attr("class", "fa fa-star-o")
           .attr("aria-hidden", "true");
 
+        //combine into list item
         var $newLi = $("<li>")
           .attr("class", "row list-group-item")
           .append($starsDefault)
           .append($newTitle)
           .append($newHostname);
 
+        //push into article body
         $("ol").append($newLi);
       });
     }
@@ -36,7 +40,7 @@ $(function() {
     $username = $("#username").val();
     $password = $("#userPassword").val();
 
-    //authorization check
+    //authorization check can be reused for newuser login
     $.ajax({
       url: "https://hack-or-snooze.herokuapp.com/auth",
       method: "POST",
@@ -57,19 +61,12 @@ $(function() {
     $(".loginHeader").text($username);
     $("#loginForm").hide();
     $(".signupHeader").text("sign out");
-
   });
 
-  //request for token to gain access to functions available to users
-  // $.ajax({
-  //   url: "https://hack-or-snooze.herokuapp.com/users/" + $("#username").val(),
-  //   headers: {
-  //     Authorization: "Bearer " + localStorage.getItem("token")
-  //   }
-  // }).then(function(response) {
-  //   console.log(response);
-
-  // });
+  //global variables
+  let $username;
+  let $password;
+  let $token = localStorage.getItem("token");
 
   //new user
   $("#signupForm").on("submit", function(e) {
@@ -98,6 +95,7 @@ $(function() {
         $username = $newUsername;
         $password = $newUserPassword;
 
+        //login new user
         $.ajax({
           url: "https://hack-or-snooze.herokuapp.com/auth",
           method: "POST",
@@ -120,7 +118,6 @@ $(function() {
     $(".loginHeader").text($username);
     $("#signupForm").hide();
     $(".signupHeader").text("sign out");
-    
   });
 
   //hostname filter
@@ -139,20 +136,6 @@ $(function() {
     $(".favall").text("all");
   });
 
-  // function hostnameURL(inputURL) {
-  //   let URL = "";
-  //   for (let i = inputURL.indexOf(".") + 1; i < inputURL.length; i++) {
-  //     URL = URL.concat(inputURL[i]);
-  //     if (inputURL[i] === "/") {
-  //       break;
-  //     }
-  //   }
-  //   let domain = $("<a>")
-  //     .attr("href", "#")
-  //     .text("(" + URL + ")");
-  //   return domain;
-  // }
-
   // set favorites
   $(".favall").on("click", function(e) {
     let el = $(this);
@@ -170,15 +153,31 @@ $(function() {
     }
   });
 
-  //article submission
+  //submit new story
   const $form = $(".form");
 
   $form.on("submit", function(e) {
-    // append form submission
+    // need to prepend submission
+    //need to check if logged in
     e.preventDefault();
-    if ($(".loginHeader").text() === "login") {
-      alert("please login or sign up to submit articles!");
-    } else if ($(".loginHeader").text() !== "login") {
+    let $title = $("#newTitle").val();
+    let $URL = $("#newURL").val();
+    let $author = $("#newAuthor").val();
+    $.ajax({
+      url: "https://hack-or-snooze.herokuapp.com/stories",
+      method: "POST",
+      headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      data: {
+        data: {
+          username: JSON.parse(atob($token.split(".")[1])).username,
+          title: $title,
+          author: $author,
+          url: $URL
+        }
+      }
+    }).then(function(e) {
+      console.log($username);
+      //create jQuery object for display
       let $title = $("#newTitle").val();
 
       let $URL = $("#newURL").val();
@@ -192,6 +191,8 @@ $(function() {
       let $hostname = $("<small>")
         .attr("class", "text-muted")
         .attr("class", "hostname")
+        .append("<a>")
+        .attr("href", "#")
         .append($domain);
 
       let $newLink = $("<a>")
@@ -205,26 +206,27 @@ $(function() {
         .append($newLink)
         .append($hostname);
 
+      //adding new stories to the top of the pile
       $(".articles").prepend($newLi);
 
+      //clear form
       $("#newTitle").val("");
       $("#newURL").val("");
-      $(
-        "#submitArticleFormHeader > .item > #submitArticleFormHeader1"
-      ).toggleClass("show");
-      $("#submitArticleFormHeader > .nav-link .item > a").toggleClass(
-        "collapse"
-      );
-    }
+      $("#newAuthor").val("");
+      $("#submitArticleForm1").toggleClass("show");
+      // $("#submitArticleFormHeader > .nav-link .item > a").toggleClass(
+      //   "collapse"
+      // );
+    });
   });
 
   //starz
   $("ol").on("click", "li > i", function(e) {
-    if ($(".loginHeader").text() === "login") {
-      alert("please login or sign up to favorite articles!");
-    } else if ($(".loginHeader").text() !== "login") {
-      $(this).toggleClass("fa fa-star-o fa fa-star");
-    }
+    //check to see if logged in
+    //if not give
+    alert("please log in or sign up to save favorites");
+    //if logged in
+    $(this).toggleClass("fa fa-star-o fa fa-star");
   });
 
   //hostname extract function
@@ -236,6 +238,11 @@ $(function() {
       }
       URL += url[i];
     }
-    return "(" + URL + ")";
+
+    let domain = $("<a>")
+      .attr("href", "#")
+      .text("(" + URL + ")");
+
+    return domain;
   }
 });

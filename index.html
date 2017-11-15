@@ -15,9 +15,9 @@
 	
 	<nav class="navbar">
 	  <span class="navbar-brand mb-0 h1">hackOrSnooze</span>
-	    <div id="submitArticleFormHeader" data-children=".item">
+	    <div id="submitArticleForm" data-children=".item">
 	  		<div class="nav-link item">
-	    		<a data-toggle="collapse" data-parent="#submitArticleFormHeader" href="#submitArticleFormHeader1" aria-expanded="false" aria-controls="exampleAccordion1">
+	    		<a data-toggle="collapse" data-parent="#submitArticleForm" href="#submitArticleForm1" aria-expanded="false" aria-controls="submitArticleForm1">
 	      			submit
 	    		</a>
 	    	</div>
@@ -69,9 +69,8 @@
 	</nav>
 
 	<div class="container form">
-		<div id="submitArticleForm" data-children=".item">
-		  	<div class="item">
-		    	<div id="exampleAccordion1" class="panel-collapse collapse in" role="tabpanel">
+		 	<div>
+		    	<div id="submitArticleForm1" class="panel-collapse collapse in" role="tabpanel">
 					<div class="container pt-3 pb-1" id="submitform">
 						<div class="form-check">
 							<form>
@@ -80,6 +79,13 @@
 		    						</label>
 		    						<div class="col-6">
 		      							<input type="text" class="form-control" id="newTitle" placeholder="title" required>
+		    						</div>
+								</div>
+								<div class="form-group row">
+		    						<label for="colFormLabel" class="col-2 col-form-label pl-5 text-right"><strong>author</strong>
+		    						</label>
+		    						<div class="col-6">
+		      							<input type="text" class="form-control" id="newAuthor" placeholder="author" required>
 		    						</div>
 								</div>
 			 					<div class="form-group row">
@@ -100,7 +106,6 @@
 					    		</div>
 							</form>
 						</div>
-					</div>
 		   		</div>
 			</div>
 		</div>
