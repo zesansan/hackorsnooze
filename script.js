@@ -1,12 +1,34 @@
 $(function() {
   const $form = $(".form");
 
+  //login form
+  $("#loginForm").on("submit", function() {
+    $.ajax({
+      method: "POST",
+      url: "https://hack-or-snooze.herokuapp.com/auth",
+      data: {
+        data: {
+          username: $("#username").val(),
+          password: $("#userPassword").val()
+        }
+      }
+    }).then(function(response) {
+      console.log(response, "yeaaaaahh!");
+      localStorage.setItem("token", response.data.token);
+    });
+
+    $(".loginHeader").text($("#username").val());
+    console.log($("#username").val());
+    $("#username").val("");
+    $("#userPassword").val("");
+    $("#loginForm").hide();
+    $(".signupHeader").text("sign out");
+  });
+
   //clever hostname filter that stephen made
   $("ol").on("click", "li > .hostname > a", function(e) {
     e.preventDefault();
-    //console.log("I am " + $(this).text());
     let $a = $("small > a");
-    //console.log("a is " + $a);
     let $link = $(this).text();
     $a.each(function(i, ele) {
       if ($(ele).text() !== $link) {
@@ -34,7 +56,7 @@ $(function() {
     return domain;
   }
 
-  //set favorites
+  // set favorites
   $(".favall").on("click", function(e) {
     let el = $(this);
     if (el.text() === "favorites") {
@@ -44,7 +66,6 @@ $(function() {
         .hide();
     } else if (el.text() === "all") {
       el.text("favorites");
-      //ol > li > .homstname .parent().show()
       $("ol > li > i.fa-star-o")
         .parent()
         .show();
@@ -56,37 +77,45 @@ $(function() {
   $form.on("submit", function(e) {
     // append form submission
     e.preventDefault();
-    let $title = $("#abc").val();
-    let $URL = $("#xyz").val();
-    let $starDefault = $("<i>")
-      .attr("class", "fa fa-star-o")
-      .attr("aria-hidden", "true");
-    let $domain = hostnameURL($URL);
+    if ($(".loginHeader").text() === "login") {
+      alert("please login or sign up to submit articles!");
+    } else if ($(".loginHeader").text() !== "login") {
+      let $title = $("#abc").val();
+      let $URL = $("#xyz").val();
+      let $starDefault = $("<i>")
+        .attr("class", "fa fa-star-o")
+        .attr("aria-hidden", "true");
+      let $domain = hostnameURL($URL);
 
-    let $hostname = $("<small>")
-      .attr("class", "text-muted hostname")
-      .append($domain);
-    let $newLink = $("<a>")
-      .attr("href", $URL)
-      .attr("target", "_blank")
-      .text(" " + $title + " ");
+      let $hostname = $("<small>")
+        .attr("class", "text-muted hostname")
+        .append($domain);
+      let $newLink = $("<a>")
+        .attr("href", $URL)
+        .attr("target", "_blank")
+        .text(" " + $title + " ");
 
-    let $newLi = $("<li>")
-      .attr("class", "row list-group-item")
-      .append($starDefault)
-      .append($newLink)
-      .append($hostname);
+      let $newLi = $("<li>")
+        .attr("class", "row list-group-item")
+        .append($starDefault)
+        .append($newLink)
+        .append($hostname);
 
-    $(".articles").append($newLi);
+      $(".articles").append($newLi);
 
-    $("#abc").val("");
-    $("#xyz").val("");
-    $("#exampleAccordion > .item > #exampleAccordion1").toggleClass("show");
-    $("#exampleAccordion > .nav-link .item > a").toggleClass("collapsed");
+      $("#abc").val("");
+      $("#xyz").val("");
+      $("#exampleAccordion > .item > #exampleAccordion1").toggleClass("show");
+      $("#exampleAccordion > .nav-link .item > a").toggleClass("collapsed");
+    }
   });
-
+  //starz
   $("ol").on("click", "li > i", function(e) {
-    $(this).toggleClass("fa fa-star-o fa fa-star");
+    if ($(".loginHeader").text() === "login") {
+      alert("please login or sign up to favorite articles!");
+    } else if ($(".loginHeader").text() !== "login") {
+      $(this).toggleClass("fa fa-star-o fa fa-star");
+    }
   });
 
   //hostname extract
@@ -146,11 +175,19 @@ $(function() {
       }
     }).then(function(response) {
       console.log(response);
-      alert("successfully registered!!");
+      if (response.error.status === 409) {
+        alert(response.error.message);
+      } else {
+        alert("successfully registered!!");
+      }
     });
 
-    $("newUser").val("");
+    $("#newUser").val("");
     $("#newUsername").val("");
     $("#newUserPassword").val("");
+  });
+
+  $.ajax({
+    url: "https://hack-or-snooze.herokuapp.com/users/" + $
   });
 });
