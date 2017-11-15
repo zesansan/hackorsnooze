@@ -34,14 +34,8 @@ $(function() {
     }
   );
 
-  //login user
-  $("#loginForm").on("submit", function(e) {
-    e.preventDefault();
-
-    $username = $("#username").val();
-    $password = $("#userPassword").val();
-
-    //authorization check can be reused for newuser login
+  //login user function < will be reused
+  function loginUser(){
     $.ajax({
       url: "https://hack-or-snooze.herokuapp.com/auth",
       method: "POST",
@@ -58,9 +52,22 @@ $(function() {
       localStorage.setItem("token", $token);
       console.log(response, "login successful!");
     });
+  }
+
+  //login user
+  $("#loginForm").on("submit", function(e) {
+    e.preventDefault();
+
+    $username = $("#username").val();
+    $password = $("#userPassword").val();
+
+    //authorization check 
+  
+    loginUser();
 
     $(".loginHeader").text($username);
     $("#loginForm").hide();
+    $("#signupForm").hide();
     $(".signupHeader").text("sign out");
   });
 
@@ -76,6 +83,7 @@ $(function() {
     let $newUsername = $("#newUsername").val();
     let $newUserPassword = $("#newUserPassword").val();
 
+    //sign in new user
     $.ajax({
       method: "POST",
       url: "https://hack-or-snooze.herokuapp.com/users",
@@ -97,27 +105,13 @@ $(function() {
         $password = $newUserPassword;
 
         //login new user
-        $.ajax({
-          url: "https://hack-or-snooze.herokuapp.com/auth",
-          method: "POST",
-          data: {
-            data: {
-              username: $username,
-              password: $password
-            }
-          }
-        }).then(function(response) {
-          //storing username and token in localStorage to be used for later
-          $token = response.data.token;
-          localStorage.setItem("username", $username);
-          localStorage.setItem("token", $token);
-          console.log(response, "login successful!");
-        });
+        loginUser();
       }
     });
 
     $(".loginHeader").text($username);
     $("#signupForm").hide();
+    $("#loginForm").hide();
     $(".signupHeader").text("sign out");
   });
 
