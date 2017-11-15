@@ -2,6 +2,7 @@ $(function() {
   // get stories
   $.getJSON("https://hack-or-snooze.herokuapp.com/stories?limit=10").then(
     function(response) {
+      console.log("newest stories loaded.")
       //looping through each array item in data object
       response.data.forEach(function(val, idx, arr) {
         //article title
@@ -157,8 +158,7 @@ $(function() {
   const $form = $(".form");
 
   $form.on("submit", function(e) {
-    // need to prepend submission
-    //need to check if logged in
+  
     e.preventDefault();
     let $title = $("#newTitle").val();
     let $URL = $("#newURL").val();
@@ -176,8 +176,9 @@ $(function() {
         }
       }
     }).then(function(e) {
-      console.log($username);
-      //create jQuery object for display
+
+      console.log("adding new article!");
+     
       let $title = $("#newTitle").val();
 
       let $URL = $("#newURL").val();
@@ -213,21 +214,34 @@ $(function() {
       $("#newTitle").val("");
       $("#newURL").val("");
       $("#newAuthor").val("");
-      $("#submitArticleForm1").toggleClass("show");
-      // $("#submitArticleFormHeader > .nav-link .item > a").toggleClass(
-      //   "collapse"
-      // );
     });
+
+    //need to get user info again after this to localStorage article names posted by user
+
   });
 
   //starz
   $("ol").on("click", "li > i", function(e) {
-    //check to see if logged in
-    //if not give
+  //need to check to see if logged in
+    $.ajax({  
+      url: "https://hack-or-snooze.herokuapp.com/users/username/favorites/storyId",
+      method: "POST",
+      headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      data: {
+        data: {
+          username: JSON.parse(atob($token.split(".")[1])).username,
+          title: $title,
+          author: $author,
+          url: $URL
+        }
+      }
+    }).then(function(e) {
+      console.log($username);
     alert("please log in or sign up to save favorites");
     //if logged in
     $(this).toggleClass("fa fa-star-o fa fa-star");
   });
+ })   
 
   //hostname extract function
   function newHostname(url) {
@@ -245,4 +259,5 @@ $(function() {
 
     return domain;
   }
-});
+
+});  
