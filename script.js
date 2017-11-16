@@ -3,6 +3,7 @@ $(function() {
   $.getJSON("https://hack-or-snooze.herokuapp.com/stories?limit=10").then(
     function(response) {
       console.log("newest stories loaded.")
+      console.log(response)
       //looping through each array item in data object
       response.data.forEach(function(val, idx, arr) {
         //article title
@@ -72,8 +73,8 @@ $(function() {
   });
 
   //global variables
-  let $username;
-  let $password;
+  let $username = localStorage.getItem('username');
+  let $password = localStorage.getItem('password');
   let $token = localStorage.getItem("token");
 
   //new user
@@ -217,7 +218,8 @@ $(function() {
   //starz
   $("ol").on("click", "li > i", function(e) {
   //need to check to see if logged in
-    $.ajax({  
+
+    $.ajax({  //extract username
       url: "https://hack-or-snooze.herokuapp.com/users/username/favorites/storyId",
       method: "POST",
       headers: { Authorization: "Bearer " + localStorage.getItem("token") },
@@ -231,10 +233,10 @@ $(function() {
       }
     }).then(function(e) {
       console.log($username);
-    alert("please log in or sign up to save favorites");
-    //if logged in
-    $(this).toggleClass("fa fa-star-o fa fa-star");
-  });
+      $(this).toggleClass("fa fa-star-o fa fa-star");
+   }, function(){
+         alert("please log in or sign up to save favorites");
+   });
  })   
 
   //hostname extract function
