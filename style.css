@@ -62,3 +62,7 @@ div#authorize {
 #loginForm {
 	left: -120px;
 }
+
+.dropdown-header{
+	color: #000000;
+}

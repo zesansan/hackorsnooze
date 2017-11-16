@@ -43,6 +43,7 @@ $(function() {
 
   //login user function < will be reused
   function loginUser() {
+   
     $.ajax({
       url: "https://hack-or-snooze.herokuapp.com/auth",
       method: "POST",
@@ -59,14 +60,14 @@ $(function() {
         localStorage.setItem("username", $username);
         localStorage.setItem("token", $token);
         console.log(response, "login successful!");
+        
         $(".loginHeader").text($username);
-        //$("#signupForm").toggleClass();
-        //$("#loginForm").toggleClass();
         $(".signupHeader").text("sign out");
-
+        $(".loginHeader").text($username);
+        
         //signout
-        let $signoutButton = $(".signupHeader");
-        $signoutButton.on("click", function(e) {
+      
+        $(".signupHeader").on("click", function(e) {
           localStorage.clear();
           alert("signed out");
           $(".loginHeader").text("login");
@@ -81,7 +82,9 @@ $(function() {
 
   //login user
   $("#loginForm").on("submit", function(e) {
+
     e.preventDefault();
+    $(this).collapse("hide");
 
     $username = $("#username").val();
     $password = $("#userPassword").val();
@@ -90,15 +93,15 @@ $(function() {
 
     loginUser();
 
-    // $(".loginHeader").text($username);
-    // $("#loginForm").hide();
-    // $("#signupForm").hide();
-    // $(".signupHeader").text("sign out");
+ //<h6 class="dropdown-header signupHeader" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" type="text">sign up</h6>
   });
 
   //new user
   $("#signupForm").on("submit", function(e) {
+
     e.preventDefault();
+    $(this).collapse("hide");
+
     let $newUser = $("#newUser").val();
     let $newUsername = $("#newUsername").val();
     let $newUserPassword = $("#newUserPassword").val();
@@ -194,7 +197,7 @@ $(function() {
         console.log("adding new article!");
 
         let $title = $("#newTitle").val();
-
+        
         let $URL = $("#newURL").val();
 
         let $starDefault = $("<i>")
