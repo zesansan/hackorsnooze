@@ -3,6 +3,7 @@ $(function() {
   $.getJSON("https://hack-or-snooze.herokuapp.com/stories?limit=10").then(
     function(response) {
       console.log("newest stories loaded.")
+      console.log(response)
       //looping through each array item in data object
       response.data.forEach(function(val, idx, arr) {
         //article title
@@ -218,7 +219,7 @@ $(function() {
   });
 
   //starz
-  $("ol").on("click", "li > i", function(e) {
+  $("ol").on("click", "li > i", function(e){
     let $storyID = $(this).text()
     $(this).toggleClass("fa fa-star-o fa fa-star");
     console.log($storyID)
