@@ -12,23 +12,26 @@ $(function() {
           .attr("target", "_blank")
           .text(" " + arr[idx].title + " ");
 
+
         //hostname
         var $newHostname = $("<small>")
           .attr("class", "text-muted hostname")
           .append(newHostname(arr[idx].url));
 
+          var $storyId = $('<a>').attr('href','#').attr('class','storyID').text(arr[idx].storyId).hide()
         //star
         var $starsDefault = $("<i>")
           .attr("class", "fa fa-star-o")
-          .attr("aria-hidden", "true");
+          .attr("aria-hidden", "true")
+          .append($storyId);
 
         //combine into list item
         var $newLi = $("<li>")
           .attr("class", "row list-group-item")
           .append($starsDefault)
           .append($newTitle)
-          .append($newHostname);
-
+          .append($newHostname)
+        
         //push into article body
         $("ol").append($newLi);
       });
@@ -216,27 +219,19 @@ $(function() {
   });
 
   //starz
-  $("ol").on("click", "li > i", function(e) {
-  //need to check to see if logged in
-
-    $.ajax({  //extract username
-      url: "https://hack-or-snooze.herokuapp.com/users/username/favorites/storyId",
+  $("ol").on("click", "li > i", function(e){
+    let $storyID = $(this).text()
+    $(this).toggleClass("fa fa-star-o fa fa-star");
+    console.log($storyID)
+    $.ajax({  
+      url: "https://hack-or-snooze.herokuapp.com/users/"+ $username +"/favorites/" + $storyID,
       method: "POST",
       headers: { Authorization: "Bearer " + localStorage.getItem("token") },
-      data: {
-        data: {
-          username: JSON.parse(atob($token.split(".")[1])).username,
-          title: $title,
-          author: $author,
-          url: $URL
-        }
-      }
-    }).then(function(e) {
-      console.log($username);
-      $(this).toggleClass("fa fa-star-o fa fa-star");
-   }, function(){
-         alert("please log in or sign up to save favorites");
-   });
+   
+    }).then(function(response) {
+     //if logged in
+    console.log(response, "favorites added?")
+  });
  })   
 
   //hostname extract function
